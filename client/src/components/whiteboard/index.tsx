@@ -101,7 +101,6 @@ const Whiteboard: FC = () => {
     });
 
     socket.on('roomUsers', (count: number) => {
-      console.log(count)
       setUsersInRoom(count);
     });
 
@@ -252,7 +251,6 @@ const Whiteboard: FC = () => {
     link.href = canvas.toDataURL();
     link.click();
   };
-  console.log(roomId, joinedRoom)
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
