@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { io, Socket } from 'socket.io-client';
+const SERVER_URL = import.meta.env.VITE_SERVER_URL; // Backend server URL
 import SessionsModal from '../session-modal'
 
 interface Session {
@@ -57,7 +58,7 @@ const Whiteboard: FC = () => {
 
   const fetchSessions = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/sessions');
+      const response = await fetch(`${SERVER_URL}/api/sessions`);
       const data = await response.json();
       setSessions(data);
     } catch (error) {
@@ -69,7 +70,7 @@ const Whiteboard: FC = () => {
     if (!joinedRoom) return;
     
     try {
-      await fetch('http://localhost:3000/api/sessions/save', {
+      await fetch(`${SERVER_URL}/api/sessions/save`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ const Whiteboard: FC = () => {
   };
 
   useEffect(() => {
-    socketRef.current = io('http://localhost:3000');
+    socketRef.current = io(SERVER_URL);
     const socket = socketRef.current;
 
     socket.on('connect', () => {

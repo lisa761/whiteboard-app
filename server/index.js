@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -8,18 +9,21 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Your React app URL
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"]
   }
 });
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  methods: ["GET", "POST"],
+}));
 app.use(express.json());
 
 // PostgreSQL connection using Sequelize
-const sequelize = new Sequelize('whiteboard_db', 'lisa', '', {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   host: 'localhost',
   dialect: 'postgres',
-  logging: false // Set to true for SQL query logging
+  logging: false
 });
 
 // Define models
