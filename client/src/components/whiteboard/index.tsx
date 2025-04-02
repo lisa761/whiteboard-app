@@ -8,8 +8,9 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { io, Socket } from 'socket.io-client';
-const SERVER_URL = import.meta.env.VITE_SERVER_URL; // Backend server URL
 import SessionsModal from '../session-modal'
+
+const SERVER_URL = import.meta.env.VITE_SERVER_URL; // Backend server URL
 
 interface Session {
   roomId: string;
@@ -236,6 +237,12 @@ const Whiteboard: FC = () => {
       setJoinedRoom(roomId);
     }
   };
+
+  useEffect(() => {
+    if (joinedRoom !== roomId) {
+      handleJoinRoom();
+    }
+  }, [roomId])
 
   const handleClear = (): void => {
     clearCanvas();

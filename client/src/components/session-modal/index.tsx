@@ -26,7 +26,6 @@ const SessionModal: FC<any> = ({ sessions, showSessionsModal, setShowSessionsMod
                 className="p-4 border rounded-lg hover:bg-gray-50 cursor-pointer"
                 onClick={() => {
                   setRoomId(session.roomId);
-                  handleJoinRoom();
                   setShowSessionsModal(false);
                 }}
               >
